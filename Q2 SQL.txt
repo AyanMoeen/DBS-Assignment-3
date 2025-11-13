@@ -1,0 +1,53 @@
+-- Question 2 SQL Queries
+
+-- 1. Items unavailable and priced above 500
+SELECT itemName
+FROM MenuItem
+WHERE isAvailable = 0 AND price > 500;
+
+-- 2. Items that are either Beverages over 300 or Desserts
+SELECT itemName
+FROM MenuItem
+WHERE (category = 'Beverage' AND price > 300)
+   OR category = 'Dessert';
+
+-- 3. Available snacks with their prices
+SELECT itemName, price
+FROM MenuItem
+WHERE category = 'Snack' AND isAvailable = 1;
+
+-- 4. Available snacks with price divided by 100
+SELECT itemName, price/100 AS adjusted_price
+FROM MenuItem
+WHERE category = 'Snack' AND isAvailable = 1;
+
+-- 5. Suppliers that supply 'Cappuccino'
+SELECT DISTINCT s.supplierID
+FROM Supplies s
+JOIN MenuItem m ON s.itemID = m.itemID
+WHERE m.itemName = 'Cappuccino';
+
+-- 6. Employees living in same city as their cafe
+SELECT e.name, c.cafeName
+FROM Employee e
+JOIN Cafe c ON e.cafeID = c.cafeID
+WHERE e.address = c.city;
+
+-- 7. Employees whose salary is not 50000
+SELECT empID
+FROM Employee
+WHERE salary <> 50000;
+
+-- 8. Suppliers located in both Karachi and Lahore
+SELECT supplierID
+FROM Supplier
+WHERE city = 'Karachi'
+INTERSECT
+SELECT supplierID
+FROM Supplier
+WHERE city = 'Lahore';
+
+-- 9. Menu items never supplied by any supplier
+SELECT itemName
+FROM MenuItem
+WHERE itemID NOT IN (SELECT itemID FROM Supplies);
