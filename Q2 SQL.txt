@@ -39,13 +39,10 @@ FROM Employee
 WHERE salary <> 50000;
 
 -- 8. Suppliers located in both Karachi and Lahore
-SELECT supplierID
-FROM Supplier
-WHERE city = 'Karachi'
-INTERSECT
-SELECT supplierID
-FROM Supplier
-WHERE city = 'Lahore';
+SELECT s1.supplierID
+FROM Supplier s1
+JOIN Supplier s2 ON s1.supplierID = s2.supplierID
+WHERE s1.city = 'Karachi' AND s2.city = 'Lahore';
 
 -- 9. Menu items never supplied by any supplier
 SELECT itemName
